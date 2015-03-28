@@ -1,8 +1,10 @@
-package com.bcpk.docket.ListView;
+package com.bcpk.docket.MainActivity;
 
 /**
  * Created by ledzee on 3/24/15.
  */
+
+//Creating custom class of a location and giving properties such as image, title and description
 
 public class Location {
     private int imageId;

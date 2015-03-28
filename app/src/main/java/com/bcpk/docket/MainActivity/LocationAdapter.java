@@ -1,4 +1,4 @@
-package com.bcpk.docket.ListView;
+package com.bcpk.docket.MainActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -40,21 +40,15 @@ import java.util.List;
     }
 }*/
 
-public class locationAdapter extends ArrayAdapter<Location> {
+
+public class LocationAdapter extends ArrayAdapter<Location> {
 
     Context context;
 
-    public locationAdapter(Context context, int resourceId,
-                                 List<Location> items) {
+    public LocationAdapter(Context context, int resourceId,
+                           List<Location> items) {
         super(context, resourceId, items);
         this.context = context;
-    }
-
-    /*private view holder class*/
-    private class ViewHolder {
-        ImageView imageView;
-        TextView txtTitle;
-        TextView txtDesc;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -78,5 +72,12 @@ public class locationAdapter extends ArrayAdapter<Location> {
         holder.imageView.setImageResource(rowItem.getImageId());
 
         return convertView;
+    }
+
+    /*private view holder class*/
+    private class ViewHolder {
+        ImageView imageView;
+        TextView txtTitle;
+        TextView txtDesc;
     }
 }

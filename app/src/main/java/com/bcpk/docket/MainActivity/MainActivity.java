@@ -1,4 +1,4 @@
-package com.bcpk.docket.ListView;
+package com.bcpk.docket.MainActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 
-public class listViewActivity extends Activity implements
+public class MainActivity extends Activity implements
         AdapterView.OnItemClickListener {
 
    /* public static final String[] titles = new String[] {
@@ -103,7 +103,7 @@ public class listViewActivity extends Activity implements
 
         //listView = (ListView) findViewById(R.layout.activity_main.list);
         listView = (ListView) findViewById(R.id.list);
-        locationAdapter adapter = new locationAdapter(this,
+        LocationAdapter adapter = new LocationAdapter(this,
                 R.layout.singlelocation_item, rowItems);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);

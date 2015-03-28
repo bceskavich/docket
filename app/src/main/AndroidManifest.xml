@@ -2,13 +2,14 @@
 <manifest package="com.bcpk.docket"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppBaseTheme" >
         <activity
-            android:name=".ListView.listViewActivity"
+            android:name=".MainActivity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
