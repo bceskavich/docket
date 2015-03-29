@@ -17,7 +17,7 @@ import java.io.InputStream;
 
 public class LocationActivity extends ActionBarActivity {
 
-    /* Instance Vars */
+    private static final String TAG = "LocationActivity";
 
     // Location info strings
     private String locationName;
