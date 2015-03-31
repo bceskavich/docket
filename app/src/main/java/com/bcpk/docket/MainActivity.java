@@ -1,12 +1,15 @@
 package com.bcpk.docket;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.os.AsyncTask;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.TextView;
+import android.content.Context;
 
 import com.bcpk.docket.R;
 
@@ -18,76 +21,17 @@ import java.util.List;
  */
 
 
-public class MainActivity extends Activity implements
-        AdapterView.OnItemClickListener {
+public class MainActivity extends ActionBarActivity {
 
-   /* public static final String[] titles = new String[] {
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed" };
+    // Foursquare instance vars
+    private TextView foursquareTestView;
+    private FoursquareDocket fsqDocket;
 
-    public static final String[] descriptions = new String[] {
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            };*/
-
-    public static final String[] titles = new String[] {
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Yo",
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Yo"};
-
-    public static final String[] descriptions = new String[] {
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "this should work",
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "this should work" };
-
-    public static final Integer[] images = {
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher
-
-    };
-
-    ListView listView;
-    List<Location> rowItems;
+    // Declaring the tabs & corresponding fragments
+    private ActionBar.Tab locationsTab, foursquareTab;
+    private Fragment locationsTabFragment = new LocationsTabFragment();
+    private Fragment foursquareTabFragment = new FoursquareTabFragment();
+    private String[] tabNames = {"On Campus", "In Your Area"}; // Tab titles
 
     /** Called when the activity is first created. */
     @Override
@@ -95,29 +39,49 @@ public class MainActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rowItems = new ArrayList<Location>();
-        for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i]);
-            rowItems.add(item);
+        // Sets the Foursquare vars & loads in info
+        foursquareTestView = (TextView) findViewById(R.id.foursquareTestView);
+        fsqDocket = new FoursquareDocket();
+        loadFoursquareLocations();
+
+
+    }
+
+    private void loadFoursquareLocations() {
+        // First, test if we have internet connectivity
+        ConnectivityManager connManager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            new FoursquareTask().execute("Go!");
+        } else {
+            foursquareTestView.setText("No Internet connection.");
+        }
+    }
+
+    private class FoursquareTask extends AsyncTask<String, Void, ArrayList<FoursquareVenue>> {
+
+        @Override
+        protected ArrayList<FoursquareVenue> doInBackground(String... message) {
+            ArrayList<FoursquareVenue> venueList = new ArrayList<>();
+
+            try {
+                venueList = fsqDocket.getVenues();
+            } catch (Exception e) {
+                try {
+                    throw e;
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+            return venueList;
         }
 
-        //listView = (ListView) findViewById(R.layout.activity_main.list);
-        listView = (ListView) findViewById(R.id.list);
-        LocationAdapter adapter = new LocationAdapter(this,
-                R.layout.singlelocation_item, rowItems);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        @Override
+        protected void onPostExecute(ArrayList<FoursquareVenue> venueList) {
+            Integer venuesLength = venueList.size();
+            foursquareTestView.setText(venuesLength.toString());
+        }
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "Item " + (position + 1) + ": " + rowItems.get(position),
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-    }
-
-
 }
