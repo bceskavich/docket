@@ -1,4 +1,4 @@
-package com.bcpk.docket.MainActivity.ContactView;
+package com.bcpk.docket;
 
 import android.content.Intent;
 import android.net.Uri;

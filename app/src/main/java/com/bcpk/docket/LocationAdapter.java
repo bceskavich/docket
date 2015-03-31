@@ -1,4 +1,4 @@
-package com.bcpk.docket.MainActivity;
+package com.bcpk.docket;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bcpk.docket.Location;
 import com.bcpk.docket.R;
 
 import java.util.List;

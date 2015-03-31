@@ -1,4 +1,4 @@
-package com.bcpk.docket.MainActivity;
+package com.bcpk.docket;
 
 import android.app.Activity;
 import android.os.Bundle;
