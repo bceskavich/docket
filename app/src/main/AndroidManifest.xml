@@ -16,31 +16,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-        </activity>
 
-        This code was added to run the recyclerview, which did not run
-        <activity
-            android:name=".MainActivity.recycleview.RecycleViewMainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-        -->
-
-
-        <activity
+         <activity
             android:name=".MainActivity.ContactView.ContactUs"
-            android:label="@string/title_activity_contact_us"
-            android:parentActivityName=".MainActivity.MainActivity" >
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bcpk.docket.MainActivity.MainActivity" />
+            android:label="@string/title_activity_contact_us">
+            --android:parentActivityName=".MainActivity.MainActivity" >
+             <!--<intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+              -->
+                    <meta-data
+                        android:name="android.support.PARENT_ACTIVITY"
+                        android:value="com.bcpk.docket.MainActivity.MainActivity"
+                    />
         </activity>
     </application>
 
