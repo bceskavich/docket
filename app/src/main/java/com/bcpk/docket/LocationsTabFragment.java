@@ -75,7 +75,7 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
         }
 
         listView = (ListView) findViewById(R.id.list);
-        LocationAdapter adapter = new LocationAdapter(view, R.layout.singlelocation_item, rowItems);
+        LocationAdapter adapter = new LocationAdapter(R.layout.singlelocation_item, rowItems);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 

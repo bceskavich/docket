@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <color name="orangePrimary">#FF9800</color>
+    <color name="orangeSecondary">#FFB74D</color>
+    <color name="tabInactive">#fde3c8</color>
+    <color name="tabIndicator">#FFFFFF</color>
+</resources>
