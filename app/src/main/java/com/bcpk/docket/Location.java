@@ -1,4 +1,4 @@
-package com.bcpk.docket.MainActivity;
+package com.bcpk.docket;
 
 /**
  * Created by ledzee on 3/24/15.
@@ -16,24 +16,37 @@ public class Location {
         this.title = title;
         this.desc = desc;
     }
+
     public int getImageId() {
+
         return imageId;
     }
+
     public void setImageId(int imageId) {
+
         this.imageId = imageId;
     }
+
     public String getDesc() {
+
         return desc;
     }
+
     public void setDesc(String desc) {
+
         this.desc = desc;
     }
+
     public String getTitle() {
+
         return title;
     }
+
     public void setTitle(String title) {
+
         this.title = title;
     }
+
     @Override
     public String toString() {
         return title + "\n" + desc;

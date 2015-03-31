@@ -4,6 +4,11 @@
     <string name="app_name">Docket</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_location">LocationActivity</string>
+    <string name="location_header_image_description">Location Header Image</string>
+    <string name="location_detail_name">Location Detail Name</string>
+    <string name="location_detail_address">Location Detail Address</string>
+    <string name="location_detail_desc">Location Detail Description</string>
     <string name="image">content description</string>
     <string name="title_activity_recycle_view_main">RecycleViewMainActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
