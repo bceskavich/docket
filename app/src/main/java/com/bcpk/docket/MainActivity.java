@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -100,11 +101,12 @@ public class MainActivity extends ActionBarActivity implements
     List<Location> rowItems;
 
     // Nav menu vars
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
-
-    private String[] mActivityTitles;
+    private Toolbar toolbar;
+    private DrawerLayout navDrawerLayout;
+    private ListView navDrawerList;
+    private ActionBarDrawerToggle navDrawerToggle;
+    private ArrayAdapter<String> navArrayAdapter;
+    private String[] navTitles;
     private String navTitle;
 
     /** Called when the activity is first created. */
@@ -113,51 +115,15 @@ public class MainActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Navigation titles
-        navTitle = getResources().getString(R.string.nav_name);
-        mActivityTitles = getResources().getStringArray(R.array.nav_array);
-
-        // Gets the layouts for the nav
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.main_left_drawer);
-
-        // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-        // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mActivityTitles));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-        // enable ActionBar app icon to behave as action to toggle nav drawer
-        // getActionBar().setDisplayHomeAsUpEnabled(true);
-        // getActionBar().setHomeButtonEnabled(true);
-
-        // ActionBarDrawerToggle ties together the the proper interactions
-        // between the sliding drawer and the action bar app icon
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description for accessibility */
-                R.string.drawer_close  /* "close drawer" description for accessibility */
-        ) {
-            public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        // Sets listener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        if (savedInstanceState == null) {
-            selectItem(0);
+        // Creates drawer view
+        initDrawerView();
+        if (toolbar != null) {
+            toolbar.setTitle(getResources().getString(R.string.nav_name));
+            setSupportActionBar(toolbar);
         }
+
+        // Creates the drawer nav itself
+        initDrawer();
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
@@ -173,37 +139,41 @@ public class MainActivity extends ActionBarActivity implements
         listView.setOnItemClickListener(this);
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            selectItem(position);
-        }
+    // Populates our nav drawer view
+    private void initDrawerView() {
+        navDrawerList = (ListView) findViewById(R.id.main_left_drawer);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        navDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        navTitles = getResources().getStringArray(R.array.nav_array);
+
+        // Sets adapter
+        navDrawerList.setAdapter(new ArrayAdapter<String>(MainActivity.this,
+                R.layout.drawer_list_item, navTitles));
     }
 
-    /** Swaps fragments in the main content view */
-    private void selectItem(int position) {
-        // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = new PlanetFragment();
-        Bundle args = new Bundle();
-        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-        fragment.setArguments(args);
+    private void initDrawer() {
+        navDrawerToggle = new ActionBarDrawerToggle(this, navDrawerLayout, toolbar,
+                R.string.drawer_open, R.string.drawer_close) {
 
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
+            @Override
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
 
-        // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mPlanetTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
+            @Override
+            public void onDrawerOpened(View view) {
+                super.onDrawerOpened(view);
+            }
+
+        };
+
+        navDrawerLayout.setDrawerListener(navDrawerToggle);
     }
 
     @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        getActionBar().setTitle(mTitle);
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        navDrawerToggle.syncState();
     }
 
     @Override
@@ -213,6 +183,19 @@ public class MainActivity extends ActionBarActivity implements
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if (navDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*
     @Override
     public boolean onCreateOptionsMenu(MenuItem item) {
         switch(item.getItemId()){
@@ -240,8 +223,9 @@ public class MainActivity extends ActionBarActivity implements
             default:
                 return false;
         }
-    }
+    }*/
 
+    /*
     // Handles menu click and navigates to new activities
     public void showPopupNav(View v) {
         // Initiates nav menu & inflater
@@ -257,12 +241,22 @@ public class MainActivity extends ActionBarActivity implements
                         return true;
                     case R.id.menuOptionContact:
                         startActivity(new Intent("com.bcpk.LocationActivity"));
-                    default:
+                    dault:
                         return false;
                 }
             }
         });
 
+    }*/
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Item " + (position + 1) + ": " + rowItems.get(position),
+                Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 
 }
