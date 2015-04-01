@@ -23,31 +23,20 @@
             android:name=".LocationActivity"
             android:label="@string/title_activity_location" >
         </activity>
-        <!--
-        </activity>
 
-        This code was added to run the recyclerview, which did not run
         <activity
-            android:name=".MainActivity.recycleview.RecycleViewMainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
+            android:name=".ContactUs"
+            android:label="@string/title_activity_contact_us">
+            --android:parentActivityName=".MainActivity.MainActivity" >
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        -->
-
-
-        <activity
-            android:name=".MainActivity.ContactView.ContactUs"
-            android:label="@string/title_activity_contact_us"
-            android:parentActivityName=".MainActivity" >
-
+             -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.bcpk.docket.MainActivity"
+                />
         </activity>
     </application>
 
