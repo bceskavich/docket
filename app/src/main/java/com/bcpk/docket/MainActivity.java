@@ -1,11 +1,19 @@
 package com.bcpk.docket;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.bcpk.docket.R;
@@ -18,7 +26,7 @@ import java.util.List;
  */
 
 
-public class MainActivity extends Activity implements
+public class MainActivity extends ActionBarActivity implements
         AdapterView.OnItemClickListener {
 
    /* public static final String[] titles = new String[] {
@@ -89,6 +97,13 @@ public class MainActivity extends Activity implements
     ListView listView;
     List<Location> rowItems;
 
+    // Nav menu vars
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    private String[] mPlanetTitles;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,9 +130,67 @@ public class MainActivity extends Activity implements
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Item " + (position + 1) + ": " + rowItems.get(position),
                 Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_popup:
+                // Initiates nav menu & inflater
+                PopupMenu navMenu = new PopupMenu(this, v);
+                MenuInflater inflater = navMenu.getMenuInflater();
+
+                // Sets listener and nav logic
+                navMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // Based on given ID, launches new activity
+                        switch(item.getItemId()){
+                            case R.id.menuOptionMain:
+                                return true;
+                            case R.id.menuOptionContact:
+                                startActivity(new Intent("com.bcpk.LocationActivity"));
+                            default:
+                                return false;
+                        }
+                    }
+                });
+
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    // Handles menu click and navigates to new activities
+    public void showPopupNav(View v) {
+        // Initiates nav menu & inflater
+        PopupMenu navMenu = new PopupMenu(this, v);
+        MenuInflater inflater = navMenu.getMenuInflater();
+
+        // Sets listener and nav logic
+        navMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                // Based on given ID, launches new activity
+                switch(item.getItemId()){
+                    case R.id.menuOptionMain:
+                        return true;
+                    case R.id.menuOptionContact:
+                        startActivity(new Intent("com.bcpk.LocationActivity"));
+                    default:
+                        return false;
+                }
+            }
+        });
+
+    }
 
 }
