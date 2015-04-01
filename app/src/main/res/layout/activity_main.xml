@@ -1,11 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="#ffffffff"
     tools:context=".MainActivity">
 
+    <include layout="@layout/toolbar" />
+
     <android.support.v4.widget.DrawerLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawer_layout"
+        android:id="@+id/main_drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,16 +21,21 @@
             android:layout_alignParentStart="true"
             android:background="#ffffffff"/>
 
-        <!-- Navigation Drawer -->
-        <ListView
-            android:id="@+id/left_drawer"
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"
-            android:background="#111" />
+        <!-- Nav Drawer -->
+        <RelativeLayout
+            android:layout_gravity="left|start"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/main_left_drawer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#eee"
+                android:background="#fff"
+                android:dividerHeight="1dp" />
+        </RelativeLayout>
 
     </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
