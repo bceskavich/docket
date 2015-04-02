@@ -19,4 +19,14 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_contact_us">ContactUsActivity</string>
 
+    <!-- Names for the nav menu -->
+    <string-array name="nav_array">
+        <item>Locations</item>
+        <item>Take A Tour</item>
+        <item>Resources</item>
+        <item>Contact Us</item>
+    </string-array>
+    <string name="nav_name">Docket</string>
+    <string name="drawer_open">Open Navigation</string>
+    <string name="drawer_close">Close Navigation</string>
 </resources>

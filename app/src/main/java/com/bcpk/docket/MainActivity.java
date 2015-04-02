@@ -1,11 +1,23 @@
 package com.bcpk.docket;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.bcpk.docket.R;
@@ -18,7 +30,7 @@ import java.util.List;
  */
 
 
-public class MainActivity extends Activity implements
+public class MainActivity extends ActionBarActivity implements
         AdapterView.OnItemClickListener {
 
    /* public static final String[] titles = new String[] {
@@ -89,11 +101,33 @@ public class MainActivity extends Activity implements
     ListView listView;
     List<Location> rowItems;
 
+    // Nav menu vars
+    private Toolbar toolbar;
+    private DrawerLayout navDrawerLayout;
+    private ListView navDrawerList;
+    private ActionBarDrawerToggle navDrawerToggle;
+    private ArrayAdapter<String> navArrayAdapter;
+    private String[] navTitles;
+    private String navTitle;
+
+    // For logging
+    private final String TAG = "MainActivity";
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Creates drawer view
+        initDrawerView();
+        if (toolbar != null) {
+            toolbar.setTitle(getResources().getString(R.string.nav_name));
+            setSupportActionBar(toolbar);
+        }
+
+        // Creates the drawer nav itself
+        initDrawer();
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
@@ -109,6 +143,82 @@ public class MainActivity extends Activity implements
         listView.setOnItemClickListener(this);
     }
 
+    // Populates our nav drawer view
+    private void initDrawerView() {
+        navDrawerList = (ListView) findViewById(R.id.main_left_drawer);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        navDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        navTitles = getResources().getStringArray(R.array.nav_array);
+
+        // Sets adapter
+        navDrawerList.setAdapter(new ArrayAdapter<String>(MainActivity.this,
+                R.layout.drawer_list_item, navTitles));
+        navDrawerList.setOnItemClickListener(new NavItemClickListener());
+    }
+
+    private void initDrawer() {
+        navDrawerToggle = new ActionBarDrawerToggle(this, navDrawerLayout, toolbar,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            @Override
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+
+            @Override
+            public void onDrawerOpened(View view) {
+                super.onDrawerOpened(view);
+            }
+
+        };
+
+        navDrawerLayout.setDrawerListener(navDrawerToggle);
+    }
+
+    // On nav menu item click
+    private class NavItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            switch(navTitles[position]){
+                case "Location":
+                    return;
+                case "Take A Tour":
+                    return;
+                case "Resources":
+                    return; // TODO - link to activity when completed
+                case "Contact Us":
+                    Intent contactIntent = new Intent(getApplicationContext(), ContactUs.class);
+                    startActivity(contactIntent);
+            }
+        }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        navDrawerToggle.syncState();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if (navDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
@@ -118,6 +228,5 @@ public class MainActivity extends Activity implements
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
-
 
 }
