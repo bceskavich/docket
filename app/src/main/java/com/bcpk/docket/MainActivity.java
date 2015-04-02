@@ -183,8 +183,7 @@ public class MainActivity extends ActionBarActivity implements
                 case "Location":
                     return;
                 case "Take A Tour":
-                    Intent tourIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                    startActivity(tourIntent);
+                    return;
                 case "Resources":
                     return; // TODO - link to activity when completed
                 case "Contact Us":

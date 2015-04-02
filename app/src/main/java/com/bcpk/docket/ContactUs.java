@@ -148,8 +148,7 @@ public class ContactUs extends ActionBarActivity {
                     Intent home = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(home);
                 case "Take A Tour":
-                    Intent tourIntent = new Intent(getApplicationContext(), LocationActivity.class);
-                    startActivity(tourIntent);
+                    return;
                 case "Resources":
                     return; // TODO - link to activity when completed
                 case "Contact Us":
