@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -109,6 +110,9 @@ public class MainActivity extends ActionBarActivity implements
     private String[] navTitles;
     private String navTitle;
 
+    // For logging
+    private final String TAG = "MainActivity";
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,6 +153,7 @@ public class MainActivity extends ActionBarActivity implements
         // Sets adapter
         navDrawerList.setAdapter(new ArrayAdapter<String>(MainActivity.this,
                 R.layout.drawer_list_item, navTitles));
+        navDrawerList.setOnItemClickListener(new NavItemClickListener());
     }
 
     private void initDrawer() {
@@ -168,6 +173,25 @@ public class MainActivity extends ActionBarActivity implements
         };
 
         navDrawerLayout.setDrawerListener(navDrawerToggle);
+    }
+
+    // On nav menu item click
+    private class NavItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            switch(navTitles[position]){
+                case "Location":
+                    return;
+                case "Take A Tour":
+                    Intent tourIntent = new Intent(getApplicationContext(), LocationActivity.class);
+                    startActivity(tourIntent);
+                case "Resources":
+                    return; // TODO - link to activity when completed
+                case "Contact Us":
+                    Intent contactIntent = new Intent(getApplicationContext(), ContactUs.class);
+                    startActivity(contactIntent);
+            }
+        }
     }
 
     @Override
@@ -195,59 +219,6 @@ public class MainActivity extends ActionBarActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.action_popup:
-                // Initiates nav menu & inflater
-                PopupMenu navMenu = new PopupMenu(this, v);
-                MenuInflater inflater = navMenu.getMenuInflater();
-
-                // Sets listener and nav logic
-                navMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        // Based on given ID, launches new activity
-                        switch(item.getItemId()){
-                            case R.id.menuOptionMain:
-                                return true;
-                            case R.id.menuOptionContact:
-                                startActivity(new Intent("com.bcpk.LocationActivity"));
-                            default:
-                                return false;
-                        }
-                    }
-                });
-
-                return true;
-            default:
-                return false;
-        }
-    }*/
-
-    /*
-    // Handles menu click and navigates to new activities
-    public void showPopupNav(View v) {
-        // Initiates nav menu & inflater
-        PopupMenu navMenu = new PopupMenu(this, v);
-        MenuInflater inflater = navMenu.getMenuInflater();
-
-        // Sets listener and nav logic
-        navMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                // Based on given ID, launches new activity
-                switch(item.getItemId()){
-                    case R.id.menuOptionMain:
-                        return true;
-                    case R.id.menuOptionContact:
-                        startActivity(new Intent("com.bcpk.LocationActivity"));
-                    dault:
-                        return false;
-                }
-            }
-        });
-
-    }*/
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,

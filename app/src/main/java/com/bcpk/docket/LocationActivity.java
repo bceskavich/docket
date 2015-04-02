@@ -59,6 +59,7 @@ public class LocationActivity extends ActionBarActivity {
         locationDetailDescView.setText(locationDescription);
 
         // Uses the AssetManager to load from the assets folder
+        /*
         AssetManager assets = getAssets();
 
         try {
@@ -70,7 +71,7 @@ public class LocationActivity extends ActionBarActivity {
             locationDetailImageView.setImageDrawable(headerImage);
         } catch (IOException exception) {
             Log.e(TAG, "Error loading hinds", exception);
-        }
+        }*/
 
     }
 
