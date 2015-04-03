@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -41,6 +42,13 @@ public class MainActivity extends ActionBarActivity {
     private String[] navTitles;
     private String navTitle;
 
+    // Tab vars
+    private ViewPager pager;
+    private ViewPagerAdapter pagerAdapter;
+    private SlidingTabLayout tabLayout;
+    private final CharSequence tabTitles[] = {"On The Hill", "In Your Area"};
+    private final int numTabs = 2;
+
     // For logging
     private final String TAG = "MainActivity";
 
@@ -59,6 +67,24 @@ public class MainActivity extends ActionBarActivity {
 
         // Creates the drawer nav itself
         initDrawer();
+
+        // Creates the ViewPagerAdapter and ViewPager for the tabs
+        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabTitles, numTabs,
+                TAG);
+        pager = (ViewPager) findViewById(R.id.main_pager);
+        pager.setAdapter(pagerAdapter);
+
+        // Creates tabs and colors them
+        tabLayout = (SlidingTabLayout) findViewById(R.id.main_tabs);
+        tabLayout.setDistributeEvenly(true);
+        tabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.orangeDark);
+            }
+        });
+
+        tabLayout.setViewPager(pager);
     }
 
     // Populates our nav drawer view
