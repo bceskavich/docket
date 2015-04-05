@@ -39,11 +39,17 @@ public class LocationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
+        /*
         // TODO - Make more dynamic, test values for now
         locationName = "Hinds Hall (iSchool)";
         locationAddress = "University Place, Syracuse, NY 13244";
         locationDescription = "The home of the iSchool, Hinds Hall is an innovation center filled" +
                 "with collaborative spaces.";
+        */
+
+        locationName = getIntent().getExtras().getString("title");
+        locationAddress = "TODO";
+        locationDescription = getIntent().getExtras().getString("description");
 
         // Populate the text views
         locationDetailNameView = (TextView) findViewById(R.id.locationDetailNameView);

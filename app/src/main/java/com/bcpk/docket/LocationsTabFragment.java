@@ -1,7 +1,9 @@
 package com.bcpk.docket;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +65,9 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
     ListView listView;
     List<Location> rowItems;
 
+    // For logging
+    private final String TAG = "LocationsTabFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,11 +90,26 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
+        /*
         Toast toast = Toast.makeText(getActivity(),
                 "Item " + (position + 1) + ": " + rowItems.get(position),
                 Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
+        */
+
+        // Grabs location detail and on click and adds to a bundle
+        Location item = rowItems.get(position);
+
+        Bundle locBundle = new Bundle();
+        locBundle.putString("title", item.getTitle());
+        locBundle.putString("description", item.getDesc());
+
+        // Passes bundle to an intent / starts the intent
+        Intent intent = new Intent(getActivity(), LocationActivity.class);
+        intent.putExtras(locBundle);
+        startActivity(intent);
+
     }
 
 }
