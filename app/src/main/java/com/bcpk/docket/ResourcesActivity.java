@@ -2,6 +2,7 @@ package com.bcpk.docket;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,8 +33,14 @@ import java.util.List;
  */
 
 
-public class MainActivity extends ActionBarActivity implements
+public class ResourcesActivity extends ActionBarActivity implements
         AdapterView.OnItemClickListener {
+
+
+    public final static String ID_EXTRA = "com.bcpk.docket._ID1";
+    public final static String ID_TITLE = "com.bcpk.docket._ID2";
+    public final static String ID_DESC = "com.bcpk.docket._ID3";
+    public final static String ID_IMG = "com.bcpk.docket._ID4";
 
    /* public static final String[] titles = new String[] {
             "Strawberry",
@@ -63,12 +70,12 @@ public class MainActivity extends ActionBarActivity implements
             };*/
 
     public static final String[] titles = new String[] {
-            "Hinds Hall",
-            "Bird Library",
-            "Schine Student centre",
-            "Whitman School of Management",
-            "Life Sciences Building",
-            "Hendricks Chapel",
+            "MakerSpace",
+            "Nexis",
+            "Career Services",
+            "Greek Fratenities",
+            "Writing Cetre",
+            "Campus Tours",
             "Banana",
             "Orange",
             "Mixed",
@@ -114,6 +121,7 @@ public class MainActivity extends ActionBarActivity implements
 
     // For logging
     private final String TAG = "MainActivity";
+    private String Title;
 
     /** Called when the activity is first created. */
     @Override
@@ -155,7 +163,7 @@ public class MainActivity extends ActionBarActivity implements
         navTitles = getResources().getStringArray(R.array.nav_array);
 
         // Sets adapter
-        navDrawerList.setAdapter(new ArrayAdapter<String>(MainActivity.this,
+        navDrawerList.setAdapter(new ArrayAdapter<String>(ResourcesActivity.this,
                 R.layout.drawer_list_item, navTitles));
         navDrawerList.setOnItemClickListener(new NavItemClickListener());
     }
@@ -187,12 +195,12 @@ public class MainActivity extends ActionBarActivity implements
 
 
                 case "Locations":
+                    Intent home = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(home);
                     break;
                 case "Take A Tour":
-                   break;
+                    break;
                 case "Resources":
-                    Intent resources = new Intent(getApplicationContext(), ResourcesActivity.class);
-                    startActivity(resources);
                     break;
                 case "Contact Us":
                     Intent contactIntent = new Intent(getApplicationContext(), ContactUs.class);
@@ -232,15 +240,20 @@ public class MainActivity extends ActionBarActivity implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        /*
-        * Intent newlocation = new Intent;
-        *
-        *
-        *
-        *
-        * */
 
 
+        String passableDesc = rowItems.get(position).getDesc();
+        String passableTitle = rowItems.get(position).getTitle();
+        int passableImage = rowItems.get(position).getImageId();
+        Log.d("ImgID", "This is the imageID"+passableImage);
+
+        Intent goToResource = new Intent(ResourcesActivity.this, SingleResource.class);
+
+        goToResource.putExtra(ID_TITLE, passableTitle);
+        goToResource.putExtra(ID_IMG, passableImage);
+        goToResource.putExtra(ID_DESC, passableDesc);
+
+        startActivity(goToResource);
 
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Item " + (position + 1) + ": " + rowItems.get(position),
