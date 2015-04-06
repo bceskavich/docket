@@ -15,6 +15,7 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -22,14 +23,28 @@
             android:name=".LocationActivity"
             android:label="@string/title_activity_location" >
         </activity>
-
         <activity
             android:name=".ContactUs"
-            android:label="@string/title_activity_contact_us">
+            android:label="@string/title_activity_contact_us" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bcpk.docket.MainActivity"
-                />
+                android:value="com.bcpk.docket.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity_resources"
+            android:label="@string/title_activity_activity_resources" >
+        </activity>
+        <activity
+            android:name=".BlankActivity"
+            android:label="@string/title_activity_blank" >
+        </activity>
+        <activity
+            android:name=".ResourcesActivity"
+            android:label="@string/title_activity_resources" >
+        </activity>
+        <activity
+            android:name=".SingleResource"
+            android:label="@string/title_activity_single_resource" >
         </activity>
     </application>
 

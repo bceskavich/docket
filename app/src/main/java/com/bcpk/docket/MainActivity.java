@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.bcpk.docket.R;
 
+import junit.framework.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,15 +126,20 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             switch(navTitles[position]){
-                case "Location":
-                    return;
+
+
+                case "Locations":
+                    break;
                 case "Take A Tour":
-                    return;
+                   break;
                 case "Resources":
-                    return; // TODO - link to activity when completed
+                    Intent resources = new Intent(getApplicationContext(), ResourcesActivity.class);
+                    startActivity(resources);
+                    break;
                 case "Contact Us":
                     Intent contactIntent = new Intent(getApplicationContext(), ContactUs.class);
                     startActivity(contactIntent);
+                    break;
             }
         }
     }
