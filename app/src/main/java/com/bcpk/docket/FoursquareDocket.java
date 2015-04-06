@@ -7,6 +7,7 @@ import android.util.Log;
 import com.bcpk.docket.FoursquareVenue;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -102,18 +103,63 @@ public class FoursquareDocket {
                        FoursquareVenue fsqVenue = new FoursquareVenue();
 
                        fsqVenue.name = venue.getString("name");
-                       fsqVenue.rating = venue.getString("rating");
+
+                       try {
+                           fsqVenue.rating = venue.getString("rating");
+                       } catch (JSONException e) {
+                           Log.d(TAG, "Location rating not found for: " + fsqVenue.name);
+                           fsqVenue.rating = "No Rating";
+                       }
 
                        JSONObject location = venue.getJSONObject("location");
                        fsqVenue.street = location.getJSONArray("formattedAddress").getString(0);
                        fsqVenue.city = location.getString("city");
                        fsqVenue.state = location.getString("state");
-                       fsqVenue.zip = location.getString("postalCode");
+
+                       try {
+                           fsqVenue.zip = location.getString("postalCode");
+                       } catch (JSONException e) {
+                           Log.d(TAG, "Location zip code not found for: " + fsqVenue.name);
+                           fsqVenue.zip = null;
+                       }
 
                        Location loc = new Location(LocationManager.GPS_PROVIDER);
                        loc.setLatitude(Double.valueOf(location.getString("lat")));
                        loc.setLongitude(Double.valueOf(location.getString("lng")));
                        fsqVenue.location = loc;
+
+                       // Creates the photo URL (if it exists)
+                       try {
+                           // If a featured photo exists, use it
+                           JSONObject featuredPhotos = venue.getJSONObject("featuredPhotos");
+                           if (featuredPhotos.getInt("count") > 0) {
+                               // Loads in the photo item
+                               JSONObject photoItem = featuredPhotos.getJSONArray("items")
+                                       .getJSONObject(0);
+
+                               // Pull out photo pieces
+                               String prefix = photoItem.getString("prefix");
+                               String width = photoItem.getString("width");
+                               String suffix = photoItem.getString("suffix");
+
+                               // Build URL
+                               fsqVenue.photoUrl = prefix + "width" + width + suffix;
+                           } else {
+                               fsqVenue.photoUrl = null;
+                           }
+                       } catch (JSONException e) {
+                           Log.d(TAG, "Featured image not found for: " + fsqVenue.name);
+                           fsqVenue.photoUrl = null;
+                       }
+
+                       // Finally, do the categorical description
+                       try {
+                           JSONObject category = venue.getJSONArray("categories").getJSONObject(0);
+                           fsqVenue.description = category.getString("name");
+                       } catch (JSONException e) {
+                           Log.d(TAG, "Foursquare description not found for: " + fsqVenue.name);
+                           fsqVenue.description = null;
+                       }
 
                        // TODO - remove per testing
                        Log.d(TAG, fsqVenue.name + " - " + fsqVenue.rating);

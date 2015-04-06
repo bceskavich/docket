@@ -1,7 +1,13 @@
 package com.bcpk.docket;
 
+import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,18 +17,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 
 
 public class LocationActivity extends ActionBarActivity {
 
+    // For logging
     private static final String TAG = "LocationActivity";
 
     // Location info strings
     private String locationName;
     private String locationAddress;
     private String locationDescription;
+    private String locationType;
+    private String image;
 
     // Location info text views
     private TextView locationDetailNameView;
@@ -39,11 +53,19 @@ public class LocationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
+        /*
         // TODO - Make more dynamic, test values for now
         locationName = "Hinds Hall (iSchool)";
         locationAddress = "University Place, Syracuse, NY 13244";
         locationDescription = "The home of the iSchool, Hinds Hall is an innovation center filled" +
                 "with collaborative spaces.";
+        */
+
+        locationName = getIntent().getExtras().getString("title");
+        locationAddress = "TODO";
+        locationDescription = getIntent().getExtras().getString("description");
+        locationType = getIntent().getExtras().getString("locationType");
+        image = getIntent().getExtras().getString("image");
 
         // Populate the text views
         locationDetailNameView = (TextView) findViewById(R.id.locationDetailNameView);
@@ -51,12 +73,21 @@ public class LocationActivity extends ActionBarActivity {
         locationDetailDescView = (TextView) findViewById(R.id.locationDetailDescriptionView);
 
         // Populate the image view
-        locationDetailImageView = (ImageView) findViewById(R.id.locationDetailImageView);
+        locationDetailImageView = (ImageView) findViewById(R.id.imageView2);
 
         // Sets text values
         locationDetailNameView.setText(locationName);
         locationDetailAddressView.setText(locationAddress);
         locationDetailDescView.setText(locationDescription);
+
+        // Load image via URL if from foursquare
+        // TODO - set attribution
+        if (locationType.equals("foursquare")) {
+            // TODO - default image
+            Ion.with(locationDetailImageView).load(image);
+        }
+        // Otherwise, load hard-coded asset
+        // TODO
 
         // Uses the AssetManager to load from the assets folder
         /*

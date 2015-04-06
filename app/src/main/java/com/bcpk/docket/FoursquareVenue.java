@@ -15,6 +15,7 @@ public class FoursquareVenue {
     public String city;
     public String state;
     public String zip;
-    // public string photoUrl;
+    public String photoUrl;
     public Location location;
+    public String description; // Based on Foursquare category info
 }

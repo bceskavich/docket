@@ -9,26 +9,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bcpk.docket.Location;
-import com.bcpk.docket.R;
-
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Billy on 4/6/15.
+ */
 
-public class LocationAdapter extends ArrayAdapter<Location> {
+public class FoursquareAdapter extends ArrayAdapter<FoursquareVenue> {
 
     Context context;
 
-    public LocationAdapter(Context context, int resourceId,
-                           List<Location> items) {
+    public FoursquareAdapter(Context context, int resourceId, List<FoursquareVenue> items) {
         super(context, resourceId, items);
         this.context = context;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        Location rowItem = getItem(position);
+        FoursquareVenue rowItem = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -42,9 +40,10 @@ public class LocationAdapter extends ArrayAdapter<Location> {
         } else
             holder = (ViewHolder) convertView.getTag();
 
-        holder.txtDesc.setText(rowItem.getDesc());
-        holder.txtTitle.setText(rowItem.getTitle());
-        holder.imageView.setImageResource(rowItem.getImageId());
+        holder.txtDesc.setText(rowItem.description);
+        holder.txtTitle.setText(rowItem.name);
+        // TODO - foursquare image stream
+        holder.imageView.setImageResource(R.drawable.ic_launcher);
 
         return convertView;
     }
@@ -56,3 +55,4 @@ public class LocationAdapter extends ArrayAdapter<Location> {
         TextView txtDesc;
     }
 }
+

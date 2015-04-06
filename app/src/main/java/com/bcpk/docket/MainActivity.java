@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,76 +31,7 @@ import java.util.List;
  */
 
 
-public class MainActivity extends ActionBarActivity implements
-        AdapterView.OnItemClickListener {
-
-   /* public static final String[] titles = new String[] {
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed" };
-
-    public static final String[] descriptions = new String[] {
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            };*/
-
-    public static final String[] titles = new String[] {
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Yo",
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Yo"};
-
-    public static final String[] descriptions = new String[] {
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "this should work",
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "this should work" };
-
-    public static final Integer[] images = {
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher
-
-    };
-
-    ListView listView;
-    List<Location> rowItems;
+public class MainActivity extends ActionBarActivity {
 
     // Nav menu vars
     private Toolbar toolbar;
@@ -109,6 +41,13 @@ public class MainActivity extends ActionBarActivity implements
     private ArrayAdapter<String> navArrayAdapter;
     private String[] navTitles;
     private String navTitle;
+
+    // Tab vars
+    private ViewPager pager;
+    private ViewPagerAdapter pagerAdapter;
+    private SlidingTabLayout tabLayout;
+    private final CharSequence tabTitles[] = {"On The Hill", "In Your Area"};
+    private final int numTabs = 2;
 
     // For logging
     private final String TAG = "MainActivity";
@@ -129,18 +68,23 @@ public class MainActivity extends ActionBarActivity implements
         // Creates the drawer nav itself
         initDrawer();
 
-        rowItems = new ArrayList<Location>();
-        for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i]);
-            rowItems.add(item);
-        }
+        // Creates the ViewPagerAdapter and ViewPager for the tabs
+        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabTitles, numTabs,
+                TAG);
+        pager = (ViewPager) findViewById(R.id.main_pager);
+        pager.setAdapter(pagerAdapter);
 
-        //listView = (ListView) findViewById(R.layout.activity_main.list);
-        listView = (ListView) findViewById(R.id.list);
-        LocationAdapter adapter = new LocationAdapter(this,
-                R.layout.singlelocation_item, rowItems);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        // Creates tabs and colors them
+        tabLayout = (SlidingTabLayout) findViewById(R.id.main_tabs);
+        tabLayout.setDistributeEvenly(true);
+        tabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.orangeDark);
+            }
+        });
+
+        tabLayout.setViewPager(pager);
     }
 
     // Populates our nav drawer view
@@ -216,17 +160,6 @@ public class MainActivity extends ActionBarActivity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "Item " + (position + 1) + ": " + rowItems.get(position),
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
     }
 
 }
