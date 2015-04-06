@@ -58,6 +58,8 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
         Bundle locBundle = new Bundle();
         locBundle.putString("title", item.name);
         locBundle.putString("description", item.description);
+        locBundle.putString("locationType", "foursquare");
+        locBundle.putString("image", item.photoUrl);
 
         // Passes bundle to an intent / starts the intent
         Intent intent = new Intent(getActivity(), LocationActivity.class);
