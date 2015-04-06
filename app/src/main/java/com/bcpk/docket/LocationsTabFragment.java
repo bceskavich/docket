@@ -104,6 +104,8 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
         Bundle locBundle = new Bundle();
         locBundle.putString("title", item.getTitle());
         locBundle.putString("description", item.getDesc());
+        locBundle.putString("locationType", "localized");
+        locBundle.putString("image", "id");
 
         // Passes bundle to an intent / starts the intent
         Intent intent = new Intent(getActivity(), LocationActivity.class);

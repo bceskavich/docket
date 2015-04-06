@@ -73,7 +73,7 @@ public class LocationActivity extends ActionBarActivity {
         locationDetailDescView = (TextView) findViewById(R.id.locationDetailDescriptionView);
 
         // Populate the image view
-        locationDetailImageView = (ImageView) findViewById(R.id.locationDetailImageView);
+        locationDetailImageView = (ImageView) findViewById(R.id.imageView2);
 
         // Sets text values
         locationDetailNameView.setText(locationName);
