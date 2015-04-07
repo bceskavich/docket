@@ -25,15 +25,26 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     // Gets the appropriate tab fragment and returns
-    // TODO - update to handle both activities
     @Override
     public android.support.v4.app.Fragment getItem(int position) {
         if (position == 0) {
-            LocationsTabFragment locationsTabFragment = new LocationsTabFragment();
-            return locationsTabFragment;
+            if (this.activity.equals("MainActivity")) {
+                LocationsTabFragment locationsTabFragment = new LocationsTabFragment();
+                return locationsTabFragment;
+            }
+            else {
+                ResourcesTabFragment resourcesTabFragment = new ResourcesTabFragment();
+                return resourcesTabFragment;
+            }
         } else {
-            FoursquareTabFragment foursquareTabFragment = new FoursquareTabFragment();
-            return foursquareTabFragment;
+            if (this.activity.equals("MainActivity")) {
+                FoursquareTabFragment foursquareTabFragment = new FoursquareTabFragment();
+                return foursquareTabFragment;
+            }
+            else {
+                OrganizationsTabFragment organizationsTabFragment = new OrganizationsTabFragment();
+                return organizationsTabFragment;
+            }
         }
     }
 

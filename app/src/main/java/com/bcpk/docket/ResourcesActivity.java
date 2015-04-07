@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -33,41 +34,13 @@ import java.util.List;
  */
 
 
-public class ResourcesActivity extends ActionBarActivity implements
-        AdapterView.OnItemClickListener {
+public class ResourcesActivity extends ActionBarActivity {
 
 
     public final static String ID_EXTRA = "com.bcpk.docket._ID1";
     public final static String ID_TITLE = "com.bcpk.docket._ID2";
     public final static String ID_DESC = "com.bcpk.docket._ID3";
     public final static String ID_IMG = "com.bcpk.docket._ID4";
-
-   /* public static final String[] titles = new String[] {
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Strawberry",
-            "Banana",
-            "Orange",
-            "Mixed" };
-
-    public static final String[] descriptions = new String[] {
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            };*/
 
     public static final String[] titles = new String[] {
             "MakerSpace",
@@ -119,9 +92,15 @@ public class ResourcesActivity extends ActionBarActivity implements
     private String[] navTitles;
     private String navTitle;
 
+    // Tab vars
+    private ViewPager pager;
+    private ViewPagerAdapter pagerAdapter;
+    private SlidingTabLayout tabLayout;
+    private final CharSequence tabTitles[] = {"Resources", "Organizations"};
+    private final int numTabs = 2;
+
     // For logging
-    private final String TAG = "MainActivity";
-    private String Title;
+    private final String TAG = "ResourcesActivity";
 
     /** Called when the activity is first created. */
     @Override
@@ -129,7 +108,7 @@ public class ResourcesActivity extends ActionBarActivity implements
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_resources);
 
         // Creates drawer view
         initDrawerView();
@@ -141,29 +120,34 @@ public class ResourcesActivity extends ActionBarActivity implements
         // Creates the drawer nav itself
         initDrawer();
 
-        rowItems = new ArrayList<Location>();
-        for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i]);
-            rowItems.add(item);
-        }
+        // Creates the ViewPagerAdapter and ViewPager for the tabs
+        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabTitles, numTabs,
+                TAG);
+        pager = (ViewPager) findViewById(R.id.resources_pager);
+        pager.setAdapter(pagerAdapter);
 
-        //listView = (ListView) findViewById(R.layout.activity_main.list);
-        listView = (ListView) findViewById(R.id.list);
-        LocationAdapter adapter = new LocationAdapter(this,
-                R.layout.singlelocation_item, rowItems);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        // Creates tabs and colors them
+        tabLayout = (SlidingTabLayout) findViewById(R.id.resources_tabs);
+        tabLayout.setDistributeEvenly(true);
+        tabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.orangeDark);
+            }
+        });
+
+        tabLayout.setViewPager(pager);
     }
 
     // Populates our nav drawer view
     private void initDrawerView() {
-        navDrawerList = (ListView) findViewById(R.id.main_left_drawer);
+        navDrawerList = (ListView) findViewById(R.id.resources_left_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        navDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        navDrawerLayout = (DrawerLayout) findViewById(R.id.resources_drawer_layout);
         navTitles = getResources().getStringArray(R.array.nav_array);
 
         // Sets adapter
-        navDrawerList.setAdapter(new ArrayAdapter<String>(ResourcesActivity.this,
+        navDrawerList.setAdapter(new ArrayAdapter<>(ResourcesActivity.this,
                 R.layout.drawer_list_item, navTitles));
         navDrawerList.setOnItemClickListener(new NavItemClickListener());
     }
@@ -193,7 +177,6 @@ public class ResourcesActivity extends ActionBarActivity implements
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             switch(navTitles[position]){
 
-
                 case "Locations":
                     Intent home = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(home);
@@ -207,7 +190,6 @@ public class ResourcesActivity extends ActionBarActivity implements
                     startActivity(contactIntent);
                     break;
             }
-            Log.d("navPos", "This is the navTittles"+ navTitles[position]);
         }
     }
 
@@ -234,32 +216,6 @@ public class ResourcesActivity extends ActionBarActivity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-
-
-        String passableDesc = rowItems.get(position).getDesc();
-        String passableTitle = rowItems.get(position).getTitle();
-        int passableImage = rowItems.get(position).getImageId();
-        Log.d("ImgID", "This is the imageID"+passableImage);
-
-        Intent goToResource = new Intent(ResourcesActivity.this, SingleResource.class);
-
-        goToResource.putExtra(ID_TITLE, passableTitle);
-        goToResource.putExtra(ID_IMG, passableImage);
-        goToResource.putExtra(ID_DESC, passableDesc);
-
-        startActivity(goToResource);
-
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "Item " + (position + 1) + ": " + rowItems.get(position),
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
     }
 
 }
