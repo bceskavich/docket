@@ -123,10 +123,13 @@ public class FoursquareDocket {
                            fsqVenue.zip = null;
                        }
 
+                       // Parses location lat / long vals
                        Location loc = new Location(LocationManager.GPS_PROVIDER);
                        loc.setLatitude(Double.valueOf(location.getString("lat")));
                        loc.setLongitude(Double.valueOf(location.getString("lng")));
                        fsqVenue.location = loc;
+
+                       // Creates the F
 
                        // Creates the photo URL (if it exists)
                        try {

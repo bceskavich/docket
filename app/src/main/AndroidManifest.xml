@@ -4,6 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
 
     <application
         android:allowBackup="true"
@@ -31,14 +38,6 @@
                 android:value="com.bcpk.docket.MainActivity" />
         </activity>
         <activity
-            android:name=".activity_resources"
-            android:label="@string/title_activity_activity_resources" >
-        </activity>
-        <activity
-            android:name=".BlankActivity"
-            android:label="@string/title_activity_blank" >
-        </activity>
-        <activity
             android:name=".ResourcesActivity"
             android:label="@string/title_activity_resources" >
         </activity>
@@ -46,6 +45,14 @@
             android:name=".SingleResource"
             android:label="@string/title_activity_single_resource" >
         </activity>
+
+        <!-- Google Maps API Declaration & Information -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAh9b4nkFiMSjVtE50-GTU_fx1sFOPR4TE"/>
     </application>
 
 </manifest>

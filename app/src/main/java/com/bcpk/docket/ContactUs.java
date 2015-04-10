@@ -147,13 +147,17 @@ public class ContactUs extends ActionBarActivity {
                 case "Locations":
                     Intent home = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(home);
+                    break;
                 case "Take A Tour":
-                    return;
+                    break;
                 case "Resources":
-                    return; // TODO - link to activity when completed
+                    Intent resources = new Intent(getApplicationContext(), ResourcesActivity.class);
+                    startActivity(resources);
+                    break;
                 case "Contact Us":
                     Intent contactIntent = new Intent(getApplicationContext(), ContactUs.class);
                     startActivity(contactIntent);
+                    break;
             }
         }
     }

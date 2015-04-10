@@ -1,57 +1,103 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/location_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.bcpk.docket.LocationActivity">
+    android:fitsSystemWindows="true"
+    >
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/locationDetailImageView"
-        android:layout_gravity="center_horizontal"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/location_header_image_description" />
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/locationInfoGridLayout">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView2" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/locationDetailNameView"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:contentDescription="@string/location_detail_name"
-            android:editable="false" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/locationDetailAddressView"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:contentDescription="@string/location_detail_address" />
-
-    </GridLayout>
-
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="New Text"
-        android:id="@+id/locationDetailDescriptionView"
-        android:contentDescription="@string/location_detail_desc" />
+        android:orientation="vertical"
+        tools:context="com.bcpk.docket.LocationActivity">
 
-</LinearLayout>
+        <include layout="@layout/toolbar" />
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            map:cameraTargetLat="43.04"
+            map:cameraTargetLng="-76.14"
+            map:cameraZoom="15"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="175dp" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/locationInfoGridLayout"
+            android:layout_margin="16dp">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/locationDetailImageView"
+                android:contentDescription="@string/location_header_image_description" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:id="@+id/locationNameLinearLayout"
+                android:layout_marginLeft="16dp">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Location Title"
+                    android:id="@+id/locationDetailNameView"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:contentDescription="@string/location_detail_name"
+                    android:editable="false" />
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Location Address"
+                    android:id="@+id/locationDetailAddressView"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:contentDescription="@string/location_detail_address"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+
+        </GridLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Location Description"
+            android:id="@+id/locationDetailDescriptionView"
+            android:contentDescription="@string/location_detail_desc"
+            android:layout_margin="16dp" />
+
+    </LinearLayout>
+
+    <!-- Nav Drawer -->
+    <RelativeLayout
+        android:layout_gravity="left|start"
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/location_left_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#eee"
+            android:background="#fff"
+            android:dividerHeight="1dp" />
+    </RelativeLayout>
+
+</android.support.v4.widget.DrawerLayout>

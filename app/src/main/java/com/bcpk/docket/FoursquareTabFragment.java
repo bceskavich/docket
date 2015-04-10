@@ -1,6 +1,7 @@
 package com.bcpk.docket;
 
 import android.content.Intent;
+import android.location.*;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -60,6 +61,12 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
         locBundle.putString("description", item.description);
         locBundle.putString("locationType", "foursquare");
         locBundle.putString("image", item.photoUrl);
+        locBundle.putString("street", item.street);
+        locBundle.putString("city", item.city);
+        locBundle.putString("state", item.state);
+        locBundle.putDouble("lat", item.location.getLatitude());
+        locBundle.putDouble("lng", item.location.getLongitude());
+
 
         // Passes bundle to an intent / starts the intent
         Intent intent = new Intent(getActivity(), LocationActivity.class);
