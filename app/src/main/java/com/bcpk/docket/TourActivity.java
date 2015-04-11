@@ -1,16 +1,11 @@
 package com.bcpk.docket;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,22 +13,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
-import com.bcpk.docket.R;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
-import junit.framework.Test;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
- * Created by ledzee on 3/24/15.
+ * Created by Billy on 4/11/15.
  */
-
-
-public class MainActivity extends ActionBarActivity {
+public class TourActivity extends ActionBarActivity {
 
     // Nav menu vars
     private Toolbar toolbar;
@@ -44,21 +34,13 @@ public class MainActivity extends ActionBarActivity {
     private String[] navTitles;
     private String navTitle;
 
-    // Tab vars
-    private ViewPager pager;
-    private ViewPagerAdapter pagerAdapter;
-    private SlidingTabLayout tabLayout;
-    private final CharSequence tabTitles[] = {"On The Hill", "In Your Area"};
-    private final int numTabs = 2;
-
     // For logging
-    private final String TAG = "MainActivity";
+    private final String TAG = "TourActivity";
 
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_tour);
 
         // Creates drawer view
         initDrawerView();
@@ -70,34 +52,29 @@ public class MainActivity extends ActionBarActivity {
         // Creates the drawer nav itself
         initDrawer();
 
-        // Creates the ViewPagerAdapter and ViewPager for the tabs
-        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabTitles, numTabs,
-                TAG);
-        pager = (ViewPager) findViewById(R.id.main_pager);
-        pager.setAdapter(pagerAdapter);
+        SliderLayout sliderLayout = (SliderLayout) findViewById(R.id.tour_slider);
 
-        // Creates tabs and colors them
-        tabLayout = (SlidingTabLayout) findViewById(R.id.main_tabs);
-        tabLayout.setDistributeEvenly(true);
-        tabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.orangeDark);
-            }
-        });
+        HashMap<String,String> locImages = new HashMap<>();
+        locImages.put("Bird Library", "http://upload.wikimedia.org/wikipedia/commons/5/58/Bird_Library,_Syracuse_University_2.JPG");
+        locImages.put("Hinds Hall", "http://upload.wikimedia.org/wikipedia/commons/0/0b/Hinds_Hall,_Syracuse_University.JPG");
 
-        tabLayout.setViewPager(pager);
+        for (String name : locImages.keySet()) {
+            TextSliderView loc = new TextSliderView(this);
+            loc.description(name)
+                    .image(locImages.get(name));
+            sliderLayout.addSlider(loc);
+        }
     }
 
     // Populates our nav drawer view
     private void initDrawerView() {
-        navDrawerList = (ListView) findViewById(R.id.main_left_drawer);
+        navDrawerList = (ListView) findViewById(R.id.tour_left_drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        navDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        navDrawerLayout = (DrawerLayout) findViewById(R.id.tour_drawer_layout);
         navTitles = getResources().getStringArray(R.array.nav_array);
 
         // Sets adapter
-        navDrawerList.setAdapter(new ArrayAdapter<String>(MainActivity.this,
+        navDrawerList.setAdapter(new ArrayAdapter<String>(TourActivity.this,
                 R.layout.drawer_list_item, navTitles));
         navDrawerList.setOnItemClickListener(new NavItemClickListener());
     }
@@ -127,12 +104,11 @@ public class MainActivity extends ActionBarActivity {
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             switch(navTitles[position]){
 
-
                 case "Locations":
+                    Intent home = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(home);
                     break;
                 case "Take A Tour":
-                    Intent tour = new Intent(getApplicationContext(), TourActivity.class);
-                    startActivity(tour);
                     break;
                 case "Resources":
                     Intent resources = new Intent(getApplicationContext(), ResourcesActivity.class);
@@ -144,12 +120,6 @@ public class MainActivity extends ActionBarActivity {
                     break;
             }
         }
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        navDrawerToggle.syncState();
     }
 
     @Override
@@ -170,5 +140,4 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
