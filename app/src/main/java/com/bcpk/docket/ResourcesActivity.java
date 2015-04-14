@@ -96,7 +96,7 @@ public class ResourcesActivity extends ActionBarActivity {
     private ViewPager pager;
     private ViewPagerAdapter pagerAdapter;
     private SlidingTabLayout tabLayout;
-    private final CharSequence tabTitles[] = {"Resources", "Organizations"};
+    private final CharSequence tabTitles[] = {"Resources", "Tips"};
     private final int numTabs = 2;
 
     // For logging

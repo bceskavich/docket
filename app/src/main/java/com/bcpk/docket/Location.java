@@ -17,6 +17,8 @@ public class Location {
         this.desc = desc;
     }
 
+
+
     public int getImageId() {
 
         return imageId;

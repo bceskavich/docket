@@ -25,6 +25,8 @@ import com.bcpk.docket.R;
 
 import org.w3c.dom.Text;
 
+// Only activity for contact us screen for the app
+
 public class ContactUs extends ActionBarActivity {
 
     // Nav menu vars

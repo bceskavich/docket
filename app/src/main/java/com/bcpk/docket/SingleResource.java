@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+//A single resource activity. Starts when a Resource from ResourceTabFragment is clicked.
 public class SingleResource extends ActionBarActivity {
 
 

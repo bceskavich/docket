@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
+//Single location activity
 public class LocationActivity extends ActionBarActivity {
 
     // For logging
