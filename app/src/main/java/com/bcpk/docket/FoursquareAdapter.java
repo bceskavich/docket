@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created by Billy on 4/6/15.
  */
+// Foursquare single location activity
 
 public class FoursquareAdapter extends ArrayAdapter<FoursquareVenue> {
 
