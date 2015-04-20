@@ -47,13 +47,6 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        /*
-        Toast toast = Toast.makeText(getActivity(),
-                "Item " + (position + 1) + ": " + rowItems.get(position),
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-        */
 
         // Grabs location detail and on click and adds to a bundle
         FoursquareVenue item = venueList.get(position);

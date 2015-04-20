@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
+
 import java.util.List;
 
 /**
@@ -38,13 +40,14 @@ public class FoursquareAdapter extends ArrayAdapter<FoursquareVenue> {
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
             holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
             convertView.setTag(holder);
-        } else
+        } else {
             holder = (ViewHolder) convertView.getTag();
+        }
 
+        // Loads in title, description, and an image
         holder.txtDesc.setText(rowItem.description);
         holder.txtTitle.setText(rowItem.name);
-        // TODO - foursquare image stream
-        holder.imageView.setImageResource(R.drawable.ic_launcher);
+        Ion.with(holder.imageView).load(rowItem.photoUrl);
 
         return convertView;
     }
