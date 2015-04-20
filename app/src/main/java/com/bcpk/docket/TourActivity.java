@@ -18,6 +18,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -37,6 +38,102 @@ public class TourActivity extends ActionBarActivity {
     // For logging
     private final String TAG = "TourActivity";
 
+    public static final String[] address = new String[]{
+        "Archbold Gymnasium, Syracuse, NY 13210",
+        "222 Waverly Ave, Syracuse, NY 13244",
+        "222 waverly avenue, Syracuse, NY 13244",
+        "900 Irving Ave, Syracuse, NY 13244",
+        "950 Irving Ave, Syracuse, NY 13244",
+        "Syracuse University Hall of Languages, West Zone, University Pl, Syracuse, NY 13210",
+        "Hendricks Chapel West Zone Syracuse, NY 13244",
+        "343 Hinds Hall, Syracuse, NY 13210",
+        "107 College Pl, Syracuse, New York 13210",
+        "Link Hall, Syracuse, NY 13210",
+        "Whitman School of Management, 721 University Ave, Syracuse, NY 13244",
+        "215 University Pl, Syracuse, NY 13244",
+        "151, Waverly Ave, Syracuse, Ny",
+        "303 University Pl, Syracuse, NY 13210",
+        "201 Slocum Hall, Syracuse, NY 13244",
+        "Hendricks Chapel West Zone Syracuse, NY 13244",
+    };
+
+    public static final String[] titles = new String[] {
+        "Archbold Gymnasium",
+        "Bird Library",
+        "Carnegie Library",
+        "Carrier Dome",
+        "Dineen Hall",
+        "Hall of Languages",
+        "Hendricks Chapel",
+        "Hinds Hall",
+        "Life-Sciences Complex",
+        "Link Hall",
+        "Whitman School of Management",
+        "Marshall Square Mall",
+        "Newhouse Communications Center III",
+        "Schine Student Center",
+        "Slocum Hall",
+        "Shaw Quadrangle",
+    };
+
+    public static final String[] descriptions = new String[] {
+        "Campus gymnasium building",
+        "Serving students from 1972",
+        "Library with renaissance style architecture",
+        "49,262-seat domed sports stadium",
+        "State of the art law building",
+        "Landmark building on campus",
+        "Home of all religious faiths on campus",
+        "Houses the School Of Information Studies",
+        "Houses biology, chemistry, and biochemistry departments",
+        "Home to future engineers",
+        "The school of management building on campus",
+        "Dedicated to broadcast and film",
+        "State of the art media room",
+        "Centre of student activities on campus",
+        "Houses the School of Architecture",
+        "Center of activity on campus, there is always something happening on the Shaw Quadrangle",
+    };
+
+    //would be used for some of the locations
+    public static final String[] longdescriptions = new String[] {
+        "",
+        "",
+        "",
+        "",
+        "",
+        "This was the first building built on campus on 1873 with renovations to follow",
+        "",
+        "",
+        "",
+        "",
+        "The Whitman School of Management Building replaced the old School of Management Building as the home of the Whitman School of Management.",
+        "",
+        "",
+        "Designed with three levels and four wings radiating from a central atrium, the concept of the building was described as a 'reflection of the diverse intellectual, cultural, and social interests of the Syracuse University community.'",
+        "",
+        "The Quadrangle is an open green space designed to be accessible, safe, and attractive and to be used by members of the University community and their guests. The Quad is part of a centuries-old tradition in higher education: the provision of a peaceful, open-air area for both thoughtful contemplation and social interaction. As the center of campus, the Quad's walkways serve as the main lines for walks between classes. Once including the 'Oval', the space was previously used for football games, baseball games, and ROTC review. The Orange Grove is located adjacent to the Quad.",
+    };
+
+    public static final Integer[] images = {
+        R.drawable.archbold,
+        R.drawable.bird,
+        R.drawable.carnegie,
+        R.drawable.dome,
+        R.drawable.dineen,
+        R.drawable.hl,
+        R.drawable.hendricks,
+        R.drawable.hinds,
+        R.drawable.lsc,
+        R.drawable.link,
+        R.drawable.whitman_som,
+        R.drawable.ms_mall,
+        R.drawable.newhouse3,
+        R.drawable.schine,
+        R.drawable.slocum,
+        R.drawable.shaw,
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +151,19 @@ public class TourActivity extends ActionBarActivity {
 
         SliderLayout sliderLayout = (SliderLayout) findViewById(R.id.tour_slider);
 
-        HashMap<String,String> locImages = new HashMap<>();
-        locImages.put("Bird Library", "http://upload.wikimedia.org/wikipedia/commons/5/58/Bird_Library,_Syracuse_University_2.JPG");
-        locImages.put("Hinds Hall", "http://upload.wikimedia.org/wikipedia/commons/0/0b/Hinds_Hall,_Syracuse_University.JPG");
+        // Loops thru & adds in locations to slider bundle
+        ArrayList<Bundle> sliderLocations = new ArrayList<>();
+        for (int i = 0; i < titles.length; i++) {
+            Bundle item = new Bundle();
+            item.putString("name", titles[i]);
+            item.putInt("image", images[i]);
+            sliderLocations.add(item);
+        }
 
-        for (String name : locImages.keySet()) {
+        for (Bundle location : sliderLocations) {
             TextSliderView loc = new TextSliderView(this);
-            loc.description(name)
-                    .image(locImages.get(name));
+            loc.description(location.getString("name"))
+                    .image(location.getInt("image"));
             sliderLayout.addSlider(loc);
         }
     }
