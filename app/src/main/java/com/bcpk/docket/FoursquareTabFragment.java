@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,7 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
         fsqListView = (ListView) view.findViewById(R.id.fsqListView);
         fsqListView.setOnItemClickListener(this);
         fsqDocket = new FoursquareDocket();
+
         loadFoursquareLocations();
 
         return view;
@@ -82,6 +84,13 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
         NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             new FoursquareTask().execute("Go!");
+        } else {
+            // If no Internet, notify user
+            String noConnWarning = "Please enable an Internet connection to load 'In Your Area' " +
+                    "locations from Foursquare.";
+            Toast noConnectionToast = Toast.makeText(getActivity(), noConnWarning,
+                    Toast.LENGTH_LONG);
+            noConnectionToast.show();
         }
     }
 

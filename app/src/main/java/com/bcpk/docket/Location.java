@@ -10,11 +10,13 @@ public class Location {
     private int imageId;
     private String title;
     private String desc;
+    public String address;
 
-    public Location(int imageId, String title, String desc) {
+    public Location(int imageId, String title, String desc, String address) {
         this.imageId = imageId;
         this.title = title;
         this.desc = desc;
+        this.address = address;
     }
 
 

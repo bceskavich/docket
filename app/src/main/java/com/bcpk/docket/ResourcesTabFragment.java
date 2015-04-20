@@ -81,7 +81,7 @@ public class ResourcesTabFragment extends Fragment implements AdapterView.OnItem
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i]);
+            Location item = new Location(images[i], titles[i], descriptions[i], "none");
             rowItems.add(item);
         }
 

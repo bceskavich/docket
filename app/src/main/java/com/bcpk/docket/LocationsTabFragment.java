@@ -209,7 +209,7 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i]);
+            Location item = new Location(images[i], titles[i], descriptions[i], address[i]);
             rowItems.add(item);
         }
 
@@ -237,9 +237,10 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
 
         Bundle locBundle = new Bundle();
         locBundle.putString("title", item.getTitle());
+        locBundle.putString("address", item.address);
         locBundle.putString("description", item.getDesc());
         locBundle.putString("locationType", "localized");
-        locBundle.putString("image", "id");
+        locBundle.putInt("image", item.getImageId());
 
         // Passes bundle to an intent / starts the intent
         Intent intent = new Intent(getActivity(), LocationActivity.class);

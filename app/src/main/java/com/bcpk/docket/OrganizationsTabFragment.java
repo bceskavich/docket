@@ -74,7 +74,7 @@ public class OrganizationsTabFragment extends Fragment implements AdapterView.On
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i]);
+            Location item = new Location(images[i], titles[i], descriptions[i], "none");
             rowItems.add(item);
         }
 

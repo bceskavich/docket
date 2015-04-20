@@ -62,7 +62,6 @@ public class LocationActivity extends ActionBarActivity implements OnMapReadyCal
     private String locationAddress;
     private String locationDescription;
     private String locationType;
-    private String image;
     private LatLng location;
 
     // Location info text views
@@ -92,7 +91,6 @@ public class LocationActivity extends ActionBarActivity implements OnMapReadyCal
         locationName = extras.getString("title");
         locationDescription = extras.getString("description");
         locationType = extras.getString("locationType");
-        image = extras.getString("image");
 
         // Populate the text views
         locationDetailNameView = (TextView) findViewById(R.id.locationDetailNameView);
@@ -105,15 +103,19 @@ public class LocationActivity extends ActionBarActivity implements OnMapReadyCal
         // Load specific content for Foursquare vs. Hard-Coded
         if (locationType.equals("foursquare")) {
             // TODO - default image
+            String image = extras.getString("image");
             Ion.with(locationDetailImageView).load(image);
 
             // Get address & lat/long info
             locationAddress = extras.getString("street");
             location = new LatLng(extras.getDouble("lat"), extras.getDouble("lng"));
         } else {
-            // TODO - make more dynamic
-            // TODO - load in image dynamically
-            locationAddress = "1017 Ackerman Ave, Syracuse, NY";
+            // Loads hard-coded image
+            Integer imageId = extras.getInt("image");
+            locationDetailImageView.setImageResource(imageId);
+
+            // Loads string address & converts to lat/long for the map
+            locationAddress = extras.getString("address");
             getLatLng();
         }
 
