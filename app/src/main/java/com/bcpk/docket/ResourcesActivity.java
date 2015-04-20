@@ -142,6 +142,8 @@ public class ResourcesActivity extends ActionBarActivity {
                     startActivity(home);
                     break;
                 case "Take A Tour":
+                    Intent tour = new Intent(getApplicationContext(), TourActivity.class);
+                    startActivity(tour);
                     break;
                 case "Resources":
                     break;
