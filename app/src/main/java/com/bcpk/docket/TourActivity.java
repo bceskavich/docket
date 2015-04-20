@@ -6,6 +6,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +17,6 @@ import android.widget.ListView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -155,16 +155,32 @@ public class TourActivity extends ActionBarActivity {
         ArrayList<Bundle> sliderLocations = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
             Bundle item = new Bundle();
-            item.putString("name", titles[i]);
+            item.putString("title", titles[i]);
             item.putInt("image", images[i]);
+            item.putString("description", descriptions[i]);
+            item.putString("longDescription", longdescriptions[i]);
+            item.putString("locationType", "localized");
+            item.putString("address", address[i]);
             sliderLocations.add(item);
         }
 
         for (Bundle location : sliderLocations) {
-            TextSliderView loc = new TextSliderView(this);
-            loc.description(location.getString("name"))
+            DocketTextSliderView loc = new DocketTextSliderView(this);
+            loc.description(location.getString("title"))
                     .image(location.getInt("image"));
+            loc.bundle(location);
             sliderLayout.addSlider(loc);
+            loc.setOnSliderClickListener(new OnTourItemClickListener());
+        }
+    }
+
+    private class OnTourItemClickListener implements BaseSliderView.OnSliderClickListener {
+        @Override
+        public void onSliderClick(BaseSliderView view) {
+            // Passes bundle to an intent / starts the intent
+            Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
+            intent.putExtras(view.getBundle());
+            startActivity(intent);
         }
     }
 
