@@ -12,14 +12,26 @@ public class Location {
     private String desc;
     public String address;
     public String longDesc;
+    private String webAdd;
 
-    public Location(int imageId, String title, String desc, String longDesc, String address) {
+    public Location(int imageId, String title, String desc, String webAdd, String longDesc, String address) {
         this.imageId = imageId;
         this.title = title;
         this.desc = desc;
         this.longDesc = longDesc;
         this.address = address;
+        this.webAdd = webAdd;
+
     }
+
+    public void setWebAdd(String webAdd) {
+        this.webAdd = webAdd;
+    }
+
+    public String getWebAdd() {
+        return webAdd;
+    }
+
 
 
     public int getImageId() {
@@ -36,8 +48,6 @@ public class Location {
 
         return desc;
     }
-
-
 
     public void setDesc(String desc) {
 

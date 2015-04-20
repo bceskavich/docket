@@ -2,6 +2,7 @@ package com.bcpk.docket;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -141,7 +142,7 @@ public class MainActivity extends ActionBarActivity {
                 case "Contact Us":
                     Intent contactIntent = new Intent(getApplicationContext(), ContactUs.class);
                     startActivity(contactIntent);
-                    break;
+
             }
         }
     }

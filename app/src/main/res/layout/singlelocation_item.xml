@@ -4,8 +4,9 @@
               android:layout_height="fill_parent">
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:paddingTop="-10sp"
+        android:layout_width="100sp"
+        android:layout_height="80sp"
         android:contentDescription="@string/image"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
@@ -15,10 +16,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/icon"
-        android:paddingBottom="10dp"
-        android:paddingTop="5dp"
+        android:paddingBottom="5sp"
+        android:paddingTop="15sp"
         android:textColor="#ff000000"
-        android:textSize="16dp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/desc"
@@ -27,5 +28,5 @@
         android:layout_below="@+id/title"
         android:layout_toRightOf="@+id/icon"
         android:textColor="#c6060606"
-        android:textSize="14dp" />
+        android:textSize="14sp" />
 </RelativeLayout>

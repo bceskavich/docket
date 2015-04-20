@@ -18,48 +18,51 @@ import java.util.List;
  */
 public class ResourcesTabFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    public final static String ID_EXTRA = "com.bcpk.docket._ID1";
+
     public final static String ID_TITLE = "com.bcpk.docket._ID2";
     public final static String ID_DESC = "com.bcpk.docket._ID3";
     public final static String ID_IMG = "com.bcpk.docket._ID4";
+    public final static String ID_WEBADD = "com.bcpk.docket._ID5";
 
     public static final String[] titles = new String[] {
             "NEXIS",
-            "Makerspace",
-            "Career services",
-            "Writing center",
-            "Student Legal Services",
             "IDEA",
-            "All the clubs and organizations on campus",
-            "Know resources you think we should add to this list?",
+            "Makerspace",
+            "Syracuse University Student SandBox",
+            "Career services",
+            "Student Legal Services",
+            "Writing center",
+            "Know a campus resources you think we should add to this list?",
     };
 
     public static final String[] descriptions = new String[] {
             "NEXIS is a student based, membership driven research lab based in the Syracuse University iSchool",
-            "A MakerSpace is a collaborative space to imagine, design, build, tinker, modify, hack, teach, and learn",
-            "Syracuse University Career Services, located in Suite 235 of the Schine Student Center, is an all-university office serving undergraduate, graduate, and PhD students, as well as alumni",
-            "The primary aim of the Writing Center is to help you become a stronger, more accomplished writer",
-            "Have been helping students with their legal dilemmas since 1972",
             "IDEA's mission is to be a catalyst for a thriving entrepreneurship ecosystem on the SU campus. They connect students with ideas to the resources they need to move ideas forward.",
-            "",
-            "Please contact us for a helpful university resource that you would like us to add to the list",
+            "A MakerSpace is a collaborative space to imagine, design, build, tinker, modify, hack, teach, and learn",
+            "An excellent opportunity for students who want to start their own businesses",
+            "Syracuse University Career Services, located in Suite 235 of the Schine Student Center, is an all-university office serving undergraduate, graduate, and PhD students, as well as alumni",
+            "Have been helping students with their legal dilemmas since 1972",
+            "The primary aim of the Writing Center is to help you become a stronger, more accomplished writer",
+            "Email us at prasanna.k158@gmail.com",
 };
 
     public static final Integer[] images = {
             R.drawable.nexis,
+            R.drawable.idea,
             R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
+            R.drawable.studentsandbox,
             R.drawable.ic_launcher,
             R.drawable.studentlegal,
             R.drawable.ic_launcher,
             R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
+
 
     };
 
     public static final String[] websites = new String[]{
             "http://nexis.ischool.syr.edu/",
             "http://makerspace.syr.edu/",
+            "http://syracusestudentsandbox.syr.edu/",
             "http://careerservices.syr.edu/aboutus/",
             "http://wc.syr.edu/",
             "http://www.studentlegal.net/",
@@ -81,7 +84,7 @@ public class ResourcesTabFragment extends Fragment implements AdapterView.OnItem
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i], "", "none");
+            Location item = new Location(images[i], titles[i], descriptions[i], websites[i], "", "none");
             rowItems.add(item);
         }
 
@@ -102,11 +105,14 @@ public class ResourcesTabFragment extends Fragment implements AdapterView.OnItem
         String passableDesc = rowItems.get(position).getDesc();
         String passableTitle = rowItems.get(position).getTitle();
         int passableImage = rowItems.get(position).getImageId();
+        String passableWebAddress = rowItems.get(position).getWebAdd();
         Log.d("ImgID", "This is the imageID" + passableImage);
+        Log.d("WEBADD", "This is the imageID" + passableImage);
 
         Intent goToResource;
         goToResource = new Intent(getActivity(), SingleResource.class);
         //declaring extras with the intent
+        goToResource.putExtra(ID_WEBADD, passableWebAddress);
         goToResource.putExtra(ID_TITLE, passableTitle);
         goToResource.putExtra(ID_IMG, passableImage);
         goToResource.putExtra(ID_DESC, passableDesc);

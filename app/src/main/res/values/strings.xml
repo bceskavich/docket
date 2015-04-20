@@ -39,4 +39,7 @@
     <string name="title_activity_test">test</string>
     <string name="title_activity_blank">BlankActivity</string>
     <string name="title_activity_single_resource">SingleResource</string>
+    <string name="title_activity_tips_tab_fragment">TipsTabFragment</string>
+    <string name="website_adress_text">Resource website:</string>
+    <string name="title_activity_web_view">WebViewClass</string>
 </resources>

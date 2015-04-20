@@ -209,7 +209,7 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i], longDescriptions[i], address[i]);
+            Location item = new Location(images[i], titles[i], descriptions[i], "none", longDescriptions[i], address[i]);
             rowItems.add(item);
         }
 

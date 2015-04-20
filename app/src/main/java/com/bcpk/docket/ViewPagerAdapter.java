@@ -1,9 +1,9 @@
 package com.bcpk.docket;
 
-import android.app.ActionBar.Tab;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+
 
 /**
  * Created by Billy on 4/3/15.
@@ -42,8 +42,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return foursquareTabFragment;
             }
             else {
-                OrganizationsTabFragment organizationsTabFragment = new OrganizationsTabFragment();
-                return organizationsTabFragment;
+                TipsTabFragment tipsTabFragment = new TipsTabFragment();
+                return tipsTabFragment;
             }
         }
     }
