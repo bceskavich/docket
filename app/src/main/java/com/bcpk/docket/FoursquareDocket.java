@@ -1,5 +1,6 @@
 package com.bcpk.docket;
 
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
@@ -41,24 +42,54 @@ public class FoursquareDocket {
     // For logging
     private static final String TAG = "FoursquareDocket";
 
+    // For GPS
+    private Context context;
+
+    public FoursquareDocket(Context context) {
+        this.context = context;
+    }
+
     /**
      * Grabs a nearby list of popular venues
      *
-     * TODO - Based off GPS coords, not city name
      */
     public ArrayList<FoursquareVenue> getVenues() throws Exception {
         ArrayList<FoursquareVenue> venueList = new ArrayList<>();
 
-        String near = "Syracuse,%20NY";
+        String near = "Syracuse%20NY";
         String section = "topPicks";
         String venuePhotos = "1";
-        // TODO - limit of 20 good?
         String limit = "20";
 
         // Creates the full GET URL from params
-        URL url = new URL(API_URL + VENUES_ENDPOINT + "?near=" + near + "&section=" + section +
-            "&venuePhotos=" + venuePhotos + "&limit=" + limit + "&client_id=" + CLIENT_ID +
-            "&client_secret=" + CLIENT_SECRET + "&m=" + M + "&v=" + V);
+        // If GPS location isn't available, uses "Syracuse, NY" by default
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        URL url;
+
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Log.d(TAG, "GPS enabled!");
+            Location l = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (l != null) {
+                Log.d(TAG, "Location found.");
+                double lat = l.getLatitude();
+                double lng = l.getLongitude();
+
+                url = new URL(API_URL + VENUES_ENDPOINT + "?ll=" + Double.toString(lat) + "," +
+                        Double.toString(lng) + "&section=" + section + "&venuePhotos=" + venuePhotos
+                        + "&limit=" + limit + "&client_id=" + CLIENT_ID + "&client_secret=" +
+                        CLIENT_SECRET + "&m=" + M + "&v=" + V);
+            } else {
+                Log.d(TAG, "Couldn't find last location.");
+                url = new URL(API_URL + VENUES_ENDPOINT + "?near=" + near + "&section=" + section +
+                        "&venuePhotos=" + venuePhotos + "&limit=" + limit + "&client_id=" + CLIENT_ID +
+                        "&client_secret=" + CLIENT_SECRET + "&m=" + M + "&v=" + V);
+            }
+        } else {
+            Log.d(TAG, "GPS not enabled.");
+            url = new URL(API_URL + VENUES_ENDPOINT + "?near=" + near + "&section=" + section +
+                    "&venuePhotos=" + venuePhotos + "&limit=" + limit + "&client_id=" + CLIENT_ID +
+                    "&client_secret=" + CLIENT_SECRET + "&m=" + M + "&v=" + V);
+        }
 
         Log.d(TAG, "Connecting to Foursquare API URL: " + url.toString());
 

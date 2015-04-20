@@ -40,7 +40,7 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
         fsqListView = (ListView) view.findViewById(R.id.fsqListView);
         fsqStatusTextView = (TextView) view.findViewById(R.id.fsqStatusTextView);
         fsqListView.setOnItemClickListener(this);
-        fsqDocket = new FoursquareDocket();
+        fsqDocket = new FoursquareDocket(getActivity());
 
         fsqStatusTextView.setVisibility(View.GONE);
 
