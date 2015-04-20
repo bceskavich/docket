@@ -1,18 +1,21 @@
 package com.bcpk.docket;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 //A single resource activity. Starts when a Resource from ResourceTabFragment is clicked.
 public class SingleResource extends ActionBarActivity {
-
 
 
     @Override
@@ -22,7 +25,10 @@ public class SingleResource extends ActionBarActivity {
         ImageView image;
         TextView description;
         TextView title;
+        final TextView website;
+        final String websiteAdress;
 
+        website = (TextView) findViewById(R.id.resourceWebAdd);
         title = (TextView) findViewById(R.id.resourceTitle);
         description= (TextView) findViewById(R.id.resourceDescription);
         image= (ImageView) findViewById(R.id.resourceImage);
@@ -32,12 +38,28 @@ public class SingleResource extends ActionBarActivity {
                 getIntent().getExtras().getString(ResourcesActivity.ID_DESC));
 
 
-        title.setText(getIntent().getExtras().getString(""+ResourcesActivity.ID_TITLE));
-        description.setText(getIntent().getExtras().getString("" + ResourcesActivity.ID_DESC));
+        title.setText(getIntent().getExtras().getString(ResourcesActivity.ID_TITLE));
+        description.setText(getIntent().getExtras().getString(ResourcesActivity.ID_DESC));
+        website.setText(getIntent().getExtras().getString(ResourcesActivity.ID_WEBADD));
+        image.setImageResource(getIntent().getExtras().getInt(ResourcesActivity.ID_IMG));
+        websiteAdress= (getIntent().getExtras().getString(ResourcesActivity.ID_WEBADD));
 
-                image.setImageResource(getIntent().getExtras().getInt(ResourcesActivity.ID_IMG));
+        website.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startwebview = new Intent(SingleResource.this, WebViewClass.class);
+                startwebview.setData(Uri.parse(websiteAdress));
 
-    }
+                        startActivity(startwebview);
+
+                finish();
+            }
+        });
+
+
+
+
+        }
 
 
 

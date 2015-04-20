@@ -10,11 +10,30 @@ public class Location {
     private int imageId;
     private String title;
     private String desc;
+    private String webAdd;
 
     public Location(int imageId, String title, String desc) {
         this.imageId = imageId;
         this.title = title;
         this.desc = desc;
+
+    }
+
+
+    //creating a constructor to be used in ResourceTabFragment
+    public Location(int imageId, String title, String desc, String webAdd) {
+        this.imageId = imageId;
+        this.title = title;
+        this.desc = desc;
+        this.webAdd = webAdd;
+    }
+
+    public void setWebAdd(String webAdd) {
+        this.webAdd = webAdd;
+    }
+
+    public String getWebAdd() {
+        return webAdd;
     }
 
 
@@ -33,8 +52,6 @@ public class Location {
 
         return desc;
     }
-
-
 
     public void setDesc(String desc) {
 

@@ -37,51 +37,11 @@ import java.util.List;
 public class ResourcesActivity extends ActionBarActivity {
 
 
-    public final static String ID_EXTRA = "com.bcpk.docket._ID1";
+
     public final static String ID_TITLE = "com.bcpk.docket._ID2";
     public final static String ID_DESC = "com.bcpk.docket._ID3";
     public final static String ID_IMG = "com.bcpk.docket._ID4";
-
-    public static final String[] titles = new String[] {
-            "MakerSpace",
-            "Nexis",
-            "Career Services",
-            "Greek Fratenities",
-            "Writing Cetre",
-            "Campus Tours",
-            "Banana",
-            "Orange",
-            "Mixed",
-            "Yo"};
-
-    public static final String[] descriptions = new String[] {
-            "Home to iSchool, School of Information Studies",
-            "Library for all your library needs",
-            "cafe, Box Office, Career Services. You will find everything here",
-            "School of management. MBA stuff.",
-            "Life sciences",
-            "Your religious place on campus",
-            "It is the largest herbaceous flowering plant",
-            "Citrus Fruit",
-            "Mixed Fruits",
-            "this should work" };
-
-    public static final Integer[] images = {
-            R.drawable.ic_launcher,
-            R.drawable.bird,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher,
-            R.drawable.ic_launcher
-
-    };
-
-    ListView listView;
-    List<Location> rowItems;
+    public final static String ID_WEBADD = "com.bcpk.docket._ID5";
 
     // Nav menu vars
     private Toolbar toolbar;

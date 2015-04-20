@@ -83,30 +83,7 @@ public class ContactUs extends ActionBarActivity {
 
     }
 
-    /*private void sendEmail() {
-        Log.i("Send email", "");
 
-        String[] TO = {"prasanna.k158@gmail.com"};
-        //String[] CC = {"bceskavich@gmail.com"};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        //emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback/Suggestion for Docket!");
-        emailIntent.putExtra(Intent.EXTRA_TEXT,);
-
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-            Log.i("Finished sending email.", "");
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(ContactUs.this,
-                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
-        }
-
-
-    }*/
 
 
     // Populates our nav drawer view
