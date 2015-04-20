@@ -114,6 +114,9 @@ public class LocationActivity extends ActionBarActivity implements OnMapReadyCal
             String image = extras.getString("image");
             Ion.with(locationDetailImageView).load(image);
 
+            locationDescription = locationDescription + " - Rated " + extras.getString("rating") +
+                    " by Foursquare users.";
+
             // Get address & lat/long info
             locationAddress = extras.getString("street");
             location = new LatLng(extras.getDouble("lat"), extras.getDouble("lng"));
