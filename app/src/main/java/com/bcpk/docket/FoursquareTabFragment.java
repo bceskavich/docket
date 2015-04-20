@@ -25,9 +25,11 @@ import java.util.ArrayList;
 public class FoursquareTabFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     // Foursquare instance vars
+    private Boolean fsqError = false;
     private ListView fsqListView;
     private FoursquareDocket fsqDocket;
     private ArrayList<FoursquareVenue> venueList;
+    private TextView fsqStatusTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,8 +38,11 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
 
         // Sets the Foursquare vars & loads in info
         fsqListView = (ListView) view.findViewById(R.id.fsqListView);
+        fsqStatusTextView = (TextView) view.findViewById(R.id.fsqStatusTextView);
         fsqListView.setOnItemClickListener(this);
         fsqDocket = new FoursquareDocket();
+
+        fsqStatusTextView.setVisibility(View.GONE);
 
         loadFoursquareLocations();
 
@@ -82,9 +87,8 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
             // If no Internet, notify user
             String noConnWarning = "Please enable an Internet connection to load 'In Your Area' " +
                     "locations from Foursquare.";
-            Toast noConnectionToast = Toast.makeText(getActivity(), noConnWarning,
-                    Toast.LENGTH_LONG);
-            noConnectionToast.show();
+            fsqStatusTextView.setText(noConnWarning);
+            fsqStatusTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -94,9 +98,14 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
         protected ArrayList<FoursquareVenue> doInBackground(String... message) {
             venueList = new ArrayList<>();
 
+            // Set loading status
+            fsqStatusTextView.setText("Loading Foursquare locations...");
+            fsqStatusTextView.setVisibility(View.VISIBLE);
+
             try {
                 venueList = fsqDocket.getVenues();
             } catch (Exception e) {
+                fsqError = true;
                 try {
                     throw e;
                 } catch (Exception e1) {
@@ -109,9 +118,16 @@ public class FoursquareTabFragment extends Fragment implements AdapterView.OnIte
 
         @Override
         protected void onPostExecute(ArrayList<FoursquareVenue> venueList) {
-            FoursquareAdapter adapter = new FoursquareAdapter(getActivity(),
-                    R.layout.singlelocation_item, venueList);
-            fsqListView.setAdapter(adapter);
+            // On success, hide the loading text
+            if (!fsqError) {
+                fsqStatusTextView.setVisibility(View.GONE);
+
+                FoursquareAdapter adapter = new FoursquareAdapter(getActivity(),
+                        R.layout.singlelocation_item, venueList);
+                fsqListView.setAdapter(adapter);
+            } else {
+                fsqStatusTextView.setText("Error loading Foursquare locations.");
+            }
         }
     }
 
