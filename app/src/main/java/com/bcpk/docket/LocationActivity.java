@@ -89,7 +89,15 @@ public class LocationActivity extends ActionBarActivity implements OnMapReadyCal
 
         Bundle extras = getIntent().getExtras();
         locationName = extras.getString("title");
-        locationDescription = extras.getString("description");
+
+        // Check to see if we have a long description
+        Log.d(TAG, extras.getString("longDescription"));
+        if (extras.getString("longDescription").equals("")) {
+            locationDescription = extras.getString("description");
+        } else {
+            locationDescription = extras.getString("longDescription");
+        }
+
         locationType = extras.getString("locationType");
 
         // Populate the text views
@@ -176,7 +184,7 @@ public class LocationActivity extends ActionBarActivity implements OnMapReadyCal
                 Address loc = address.get(0);
                 location = new LatLng(loc.getLatitude(), loc.getLongitude());
             }
-        } catch (IOException e) {
+        } catch (IOException|IndexOutOfBoundsException e) {
             location = new LatLng(43.0377, -76.1340);
         }
     }

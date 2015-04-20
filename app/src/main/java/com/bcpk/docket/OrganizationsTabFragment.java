@@ -74,7 +74,7 @@ public class OrganizationsTabFragment extends Fragment implements AdapterView.On
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i], "none");
+            Location item = new Location(images[i], titles[i], descriptions[i], "", "none");
             rowItems.add(item);
         }
 
@@ -90,21 +90,6 @@ public class OrganizationsTabFragment extends Fragment implements AdapterView.On
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-
-        /*
-        String passableDesc = rowItems.get(position).getDesc();
-        String passableTitle = rowItems.get(position).getTitle();
-        int passableImage = rowItems.get(position).getImageId();
-        Log.d("ImgID", "This is the imageID"+passableImage);
-
-        Intent goToResource = new Intent(ResourcesActivity.this, SingleResource.class);
-
-        goToResource.putExtra(ID_TITLE, passableTitle);
-        goToResource.putExtra(ID_IMG, passableImage);
-        goToResource.putExtra(ID_DESC, passableDesc);
-
-        startActivity(goToResource);
-        */
 
         Toast toast = Toast.makeText(getActivity(),
                 "Item " + (position + 1) + ": " + rowItems.get(position),

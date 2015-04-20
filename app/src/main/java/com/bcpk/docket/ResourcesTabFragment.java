@@ -42,7 +42,7 @@ public class ResourcesTabFragment extends Fragment implements AdapterView.OnItem
             "Have been helping students with their legal dilemmas since 1972",
             "IDEA's mission is to be a catalyst for a thriving entrepreneurship ecosystem on the SU campus. They connect students with ideas to the resources they need to move ideas forward.",
             "",
-            "Please contact us for a helpful university reosurce that you would like us to add to the list",
+            "Please contact us for a helpful university resource that you would like us to add to the list",
 };
 
     public static final Integer[] images = {
@@ -81,7 +81,7 @@ public class ResourcesTabFragment extends Fragment implements AdapterView.OnItem
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i], "none");
+            Location item = new Location(images[i], titles[i], descriptions[i], "", "none");
             rowItems.add(item);
         }
 

@@ -123,7 +123,7 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
     };
 
     //would be used for some of the locations
-    public static final String[] longdescriptions = new String[] {
+    public static final String[] longDescriptions = new String[] {
         "",
         "",
         "",
@@ -209,7 +209,7 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
 
         rowItems = new ArrayList<Location>();
         for (int i = 0; i < titles.length; i++) {
-            Location item = new Location(images[i], titles[i], descriptions[i], address[i]);
+            Location item = new Location(images[i], titles[i], descriptions[i], longDescriptions[i], address[i]);
             rowItems.add(item);
         }
 
@@ -224,14 +224,6 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        /*
-        Toast toast = Toast.makeText(getActivity(),
-                "Item " + (position + 1) + ": " + rowItems.get(position),
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-        */
-
         // Grabs location detail and on click and adds to a bundle
         Location item = rowItems.get(position);
 
@@ -239,6 +231,7 @@ public class LocationsTabFragment extends Fragment implements AdapterView.OnItem
         locBundle.putString("title", item.getTitle());
         locBundle.putString("address", item.address);
         locBundle.putString("description", item.getDesc());
+        locBundle.putString("longDescription", item.longDesc);
         locBundle.putString("locationType", "localized");
         locBundle.putInt("image", item.getImageId());
 
