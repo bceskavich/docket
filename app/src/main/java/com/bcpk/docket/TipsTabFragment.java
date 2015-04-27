@@ -14,8 +14,6 @@ import android.widget.RelativeLayout;
 
 public class TipsTabFragment extends Fragment {
 
-
-
     private WebView wv1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +38,6 @@ public class TipsTabFragment extends Fragment {
         });
 
 
-return view;
+        return view;
     }
 }

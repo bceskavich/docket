@@ -47,10 +47,6 @@
             android:label="@string/title_activity_single_resource" >
         </activity>
         <activity
-            android:name=".TipsTabFragment2"
-            android:label="@string/title_activity_tips_tab_fragment" >
-        </activity>
-        <activity
             android:name=".WebViewClass"
             android:label="@string/title_activity_web_view" >
         </activity>
