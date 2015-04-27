@@ -79,12 +79,7 @@ public class ContactUs extends ActionBarActivity {
                 //sendEmail();
             }
         });
-
-
     }
-
-
-
 
     // Populates our nav drawer view
     private void initDrawerView() {

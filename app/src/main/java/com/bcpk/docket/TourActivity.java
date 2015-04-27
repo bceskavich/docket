@@ -164,6 +164,7 @@ public class TourActivity extends ActionBarActivity {
             sliderLocations.add(item);
         }
 
+        // Adds each location to the AndroidImageSlider view
         for (Bundle location : sliderLocations) {
             DocketTextSliderView loc = new DocketTextSliderView(this);
             loc.description(location.getString("title"))
